@@ -65,3 +65,5 @@ data/
 
 #cache
 __pycache__/
+
+.vscode/
