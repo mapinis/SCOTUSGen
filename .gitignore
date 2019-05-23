@@ -69,3 +69,5 @@ __pycache__/
 .vscode/
 
 server/badFiles.txt
+
+.DS_Store
