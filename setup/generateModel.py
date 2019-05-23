@@ -28,5 +28,5 @@ def generateModel():
             dropout=20,
         )
 
-    generator.save("model.hdf5")
+    generator.save("../server/model.hdf5")
 

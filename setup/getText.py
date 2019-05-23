@@ -83,7 +83,7 @@ def getText(files=None):
 
         # Make the text (one line, from start to stop)
         text = " ".join(
-            list(map(lambda line: line.strip("\t \n"), text[start + 1 : stop]))
+            list(map(lambda line: line.strip("\t -\n"), text[start + 1 : stop]))
         )
 
         fi.close()
