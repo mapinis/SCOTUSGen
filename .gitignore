@@ -61,9 +61,11 @@ typings/
 .next
 
 # exclude data
-data/
+*/data/
 
 #cache
 __pycache__/
 
 .vscode/
+
+server/badFiles.txt
