@@ -14,7 +14,7 @@ print("\tDownloaded Files:", newDownloads)
 print("\tSuccessfully Converted Files:", getTextOut["converted"])
 print("\tBad Files:", getTextOut["badFiles"])
 
-if os.path.isfile("model.hdf5"):
+if os.path.isdir("../model") and os.path.isfile("..model/model_weights.hdf5") and os.path.isfile("..model/model_config.json") and os.path.isfile("..model/model_vocab.json"):
     print("\nModel already generated, skipping.")
 else:
     inp = input(

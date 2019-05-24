@@ -3,7 +3,7 @@ import os
 
 
 def generateModel():
-    generator = textgenrnn()
+    generator = textgenrnn(name="model")
 
     files = os.listdir("data/text")
 
@@ -28,5 +28,5 @@ def generateModel():
             dropout=20,
         )
 
-    generator.save("../server/model.hdf5")
+    generator.save("../model/model_weights.hdf5")
 

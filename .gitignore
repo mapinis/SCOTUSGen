@@ -62,6 +62,7 @@ typings/
 
 # exclude data
 */data/
+data/
 
 #cache
 __pycache__/
