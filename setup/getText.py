@@ -59,7 +59,7 @@ def getText(files=None):
         if "INDEX" in checkStr or "ORDERS" in checkStr:
             print("BAD FILE:", fileName)
             fi.close()
-            subprocess.run(["rm", "data/text/" + fileName + ".txt"])  # delete the file
+            os.remove("data/text/" + fileName + ".txt")  # delete the file
             badFiles.append(fileName)
             continue  # move on
 

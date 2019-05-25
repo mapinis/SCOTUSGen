@@ -2,9 +2,25 @@
   <head>
     <title>SCOTUSGen</title>
     <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="static/index.js"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>SCOTUSGen</h1>
+    <p>
+      <form action="/opinion" method="post">
+        Petitioner: <br/>
+        <input type="text" name="petitioner"><br/>
+        Respondent: <br/>
+        <input type="text" name="respondent"><br/>
+        Name of Justice: <br/>
+        <input type="text" name="justice"><br/>
+        Date of Argument: <br/>
+        <input type="text" name="arguedDate"><br/>
+        Date of Decision: <br/>
+        <input type="text" name="decisionDate"><br/>
+        <input type="submit" value="Generate">
+      </form>
+    </p>
   </body>
 </html>
