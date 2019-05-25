@@ -17,7 +17,7 @@ def getText(files=None):
     # After one run, the list of bad files will be saved, so it cna be skipped with next setup run
     if os.path.isfile("badFiles.txt"):
         badFilesHolder = open("badFiles.txt", "r")
-        badFiles = [line.strip('\n') for line in badFilesHolder.readlines()]
+        badFiles = [line.strip("\n") for line in badFilesHolder.readlines()]
         badFilesHolder.close()
     else:
         badFiles = []
