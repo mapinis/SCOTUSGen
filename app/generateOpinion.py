@@ -2,7 +2,6 @@ from textgenrnn import textgenrnn
 from jinja2.loaders import FileSystemLoader
 from latex.jinja2 import make_env
 from latex import build_pdf
-from uuid import uuid1
 from random import randint
 
 env = make_env(loader=FileSystemLoader("./templates/"))
@@ -19,7 +18,7 @@ textgen.model._make_predict_function()  # https://github.com/matterport/Mask_RCN
 # Takes justice, petitioner, respondent, date, and circuit, and returns name of PDF of opinion
 # Generates it all -- text, LaTeX, and compiles it
 # Generated files are in format <UUID>.pdf
-def generateOpinion(justice, petitioner, respondent, date, circuit):
+def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
 
     # Generate the text
     text = textgen.generate(
@@ -53,9 +52,7 @@ def generateOpinion(justice, petitioner, respondent, date, circuit):
         )
     )
 
-    filename = str(uuid1()) + ".pdf"
+    filename = uuid + ".pdf"
 
     with open("opinions/" + filename, "wb") as f:
         f.write(bytes(pdf))
-
-    return filename
