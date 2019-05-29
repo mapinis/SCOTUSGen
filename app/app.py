@@ -3,7 +3,7 @@ import os
 
 from generateOpinion import generateOpinion
 
-app = Flask("SCOTUSGen")
+app = Flask(__name__)
 
 
 @app.route("/")
