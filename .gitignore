@@ -72,3 +72,5 @@ __pycache__/
 server/badFiles.txt
 
 .DS_Store
+
+opinions/

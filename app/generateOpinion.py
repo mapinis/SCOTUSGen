@@ -3,6 +3,7 @@ from jinja2.loaders import FileSystemLoader
 from latex.jinja2 import make_env
 from latex import build_pdf
 from random import randint
+import os
 
 env = make_env(loader=FileSystemLoader("./templates/"))
 template = env.get_template("opinion.tex")
@@ -33,7 +34,7 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     text = text.split(".")
     i = randint(4, 7)
     while i < len(text):
-        text[i] = "\\newline " + text[i]
+        text[i] = "\\\ \\newline " + text[i]
         i += randint(4, 7)
 
     # Put it all together and fix LaTeX tokens
@@ -53,6 +54,9 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     )
 
     filename = uuid + ".pdf"
+
+    if not os.path.isdir("opinions"):
+        os.mkdir("opinions")
 
     with open("opinions/" + filename, "wb") as f:
         f.write(bytes(pdf))
