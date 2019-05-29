@@ -15,10 +15,10 @@ def index():
 def opinion():
     filename = generateOpinion(
         request.form["justice"],
-        request.form["petitioner"],
-        request.form["respondent"],
-        request.form["arguedDate"],
-        request.form["decisionDate"],
+        request.form["petitioner"].upper(),
+        request.form["respondent"].upper(),
+        request.form["date"],
+        request.form["circuit"],
     )
 
     # send and delete the file
