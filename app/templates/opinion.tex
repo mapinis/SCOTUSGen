@@ -1,4 +1,43 @@
-\documentclass{article}
+\documentclass[letterpaper, twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[letterpaper, top=2.395833in, bottom=1.9375in, left=2.1875in, right=2.1875in, asymmetric, headheight=33pt, headsep=.1in]{geometry}
+\usepackage{fouriernc}
+\usepackage{anyfontsize}
+\usepackage{graphicx}
+\usepackage{microtype}
+
+\pagestyle{fancy}
+\fancyhead[CO]{Don't Cite This \\ \vspace{10pt} Opinion of the Court}
+\fancyhead[RO]{\thepage \\ \vspace{10pt} {}}
+\fancyhead[LE]{\thepage \\ \vspace{10pt} {}}
+\fancyhead[CE]{\VAR{petitioner|e} v. \VAR{respondent|e} \\ \vspace{10pt} Opinion of the Court}
+\fancyfoot[L,R,C]{}
+\renewcommand{\headrulewidth}{0pt}
+
+\fontfamily{cmr}\selectfont
+
+\setlength\parindent{10pt}
+
 \begin{document}
-\VAR{text|e}
+
+\begin{center}
+    \fontsize{13.7}{16.44}\selectfont\scalebox{1}[1.2]{\textbf{SUPREME COURT OF THE UNITED STATES}}
+    \line(1,0){50} \\ \vspace{5pt}
+    \normalsize
+    No. \VAR{number1}-\VAR{number2} \\
+    \line(1,0){50} \\ \vspace{5pt}
+    \fontsize{13.5}{16.2}\selectfont{\VAR{petitioner}, PETITIONER \textit{v.} \VAR{respondent}} \\ \vspace{10pt}
+    \fontsize{10}{12}\selectfont{ON WRIT OF CERTIORARI TO THE UNITED STATES COURT OF APPEALS FOR THE \VAR{circuit} CIRCUIT} \\ \vspace{10pt}
+    [\VAR{date}]
+\end{center}
+
+\fontsize{12}{14.4}\selectfont
+
+\textsc{Justice \VAR{justice}} delivered the opinion of the Court.\vspace{3pt}
+
+\VAR{text}
+
+\vspace{4pt}\rightline{\textit{It is so ordered.}}
+
 \end{document}
