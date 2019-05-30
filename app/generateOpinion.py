@@ -34,7 +34,7 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     text = text.split(".")
     i = randint(4, 7)
     while i < len(text):
-        text[i] = "\\\ \\newline " + text[i]
+        text[i] = "\par " + text[i]
         i += randint(4, 7)
 
     # Put it all together and fix LaTeX tokens
