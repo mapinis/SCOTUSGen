@@ -32,10 +32,12 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
 
     # Insert newlines
     text = text.split(".")
-    i = randint(4, 7)
+    i = randint(3, 6)
     while i < len(text):
+        if text[0] != " ":
+            continue
         text[i] = "\par " + text[i]
-        i += randint(4, 7)
+        i += randint(3, 6)
 
     # Put it all together and fix LaTeX tokens
     text = ".".join(text).replace("&", "\&").replace("%", "\%").replace("$", "\$")
