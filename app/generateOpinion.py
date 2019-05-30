@@ -21,10 +21,13 @@ textgen.model._make_predict_function()  # https://github.com/matterport/Mask_RCN
 # Generated files are in format <UUID>.pdf
 def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
 
+    print(uuid, "Generating text...")
     # Generate the text
     text = textgen.generate(
         prefix="The", temperature=0.72, max_gen_length=7000, return_as_list=True
     )[0]
+
+    print(uuid, "Fixing text ...")
     # Go to first instance of period, so start with sentence
     text = text[text.find(".") + 1 :]
     text = " ".join(text.split())  # Collapse spaces
@@ -34,7 +37,8 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     text = text.split(".")
     i = randint(3, 6)
     while i < len(text):
-        if text[0] != " ":
+        if text[i][0] != " ":
+            i += 1
             continue
         text[i] = "\par " + text[i]
         i += randint(3, 6)
@@ -42,6 +46,7 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     # Put it all together and fix LaTeX tokens
     text = ".".join(text).replace("&", "\&").replace("%", "\%").replace("$", "\$")
 
+    print(uuid, "Compiling PDF...")
     pdf = build_pdf(
         template.render(
             justice=justice,
@@ -60,5 +65,6 @@ def generateOpinion(justice, petitioner, respondent, date, circuit, uuid):
     if not os.path.isdir("opinions"):
         os.mkdir("opinions")
 
+    print(uuid, "Writing File...")
     with open("opinions/" + filename, "wb") as f:
         f.write(bytes(pdf))
