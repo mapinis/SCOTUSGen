@@ -1,40 +1,99 @@
 <html>
   <head>
     <title>SCOTUSGen</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/index.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="static/index.js"></script>
+    <meta name="google" content="notranslate" />
   </head>
   <body>
-    <h1>SCOTUSGen</h1>
-    <p>
+    <div id="content">
+      <h1><b>SUPREME COURT OF THE UNITED STATES</b></h1>
+      <h2>"Opinion" Generator</h2>
       <form action="/generate" method="post">
-        Petitioner: <br/>
-        <input required type="text" name="petitioner"><br/>
-        Respondent: <br/>
-        <input required type="text" name="respondent"><br/>
-        Author Justice's Last Name: <br/>
-        <input required type="text" name="justice"><br/>
-        Date of Decision: <br/>
-        <input required type="text" name="date"><br/>
-        Lower Court: <br/>
-        <select required name="circuit">
-          <option value="FIRST">First Circuit</option>
-          <option value="SECOND">Second Circuit</option>
-          <option value="THIRD">Third Circuit</option>
-          <option value="FOURTH">Fourth Circuit</option>
-          <option value="FIFTH">Fifth Circuit</option>
-          <option value="SIXTH">Sixth Circuit</option>
-          <option value="SEVENTH">Seventh Circuit</option>
-          <option value="EIGHTH">Eighth Circuit</option>
-          <option value="NINTH">Ninth Circuit</option>
-          <option value="TENTH">Tenth Circuit</option>
-          <option value="ELEVENTH">Eleventh Circuit</option>
-          <option value="D.C.">D.C. Circuit</option>
-        </select>
-        <br/>
-        <input type="submit" value="Generate">
+        <h3>
+          <input required type="text" name="petitioner" />, PETITIONER
+          <i>v.</i> <input required type="text" name="respondent" /><br />
+        </h3>
+        <h4>
+          ON WRIT OF CERTIORARI TO THE UNITED STATES COURT OF APPEALS FOR THE
+          <select required name="circuit">
+            <option disabled selected hidden></option>
+            <option value="FIRST">FIRST</option>
+            <option value="SECOND">SECOND</option>
+            <option value="THIRD">THIRD</option>
+            <option value="FOURTH">FOURTH</option>
+            <option value="FIFTH">FIFTH</option>
+            <option value="SIXTH">SIXTH</option>
+            <option value="SEVENTH">SEVENTH</option>
+            <option value="EIGHTH">EIGHTH</option>
+            <option value="NINTH">NINTH</option>
+            <option value="TENTH">TENTH</option>
+            <option value="ELEVENTH">ELEVENTH</option>
+            <option value="D.C.">D.C.</option>
+          </select>
+          CIRCUIT
+        </h4>
+        <h4>[<input required type="text" name="date" />]</h4>
+        <h3>
+          Justice <input required type="text" name="justice" /> delivered the
+          opinion of the Court.
+        </h3>
+        <br />
+        <input type="submit" value="Generate" />
+        <p id="fakeText">
+          Vestibulum vitae justo faucibus, molestie ligula in, ultricies nisl.
+          Nulla finibus urna in ipsum pulvinar, nec fermentum augue auctor.
+          Curabitur sit amet suscipit libero. Donec ut vehicula felis. Donec ut
+          sapien vitae nisl dictum accumsan. Nullam semper est erat, at rhoncus
+          justo vehicula ac. Donec eu leo at dui tempor malesuada. Pellentesque
+          id tristique tellus. Fusce convallis, sem quis placerat lacinia, augue
+          enim dignissim lectus, id consequat orci justo sit amet est. Etiam
+          facilisis est vitae nisi aliquet, eget sagittis magna faucibus. Duis
+          egestas maximus metus, at efficitur enim ornare vel. Nullam ipsum
+          metus, aliquam vehicula libero sit amet, dictum porta massa. Proin
+          euismod nibh sit amet consectetur auctor. Nulla ac mauris volutpat,
+          pharetra justo ac, auctor velit. Phasellus nec gravida velit. Mauris
+          scelerisque ipsum et eros vestibulum, vitae auctor mi fringilla. Proin
+          vel velit tempus, faucibus dolor ac, dapibus diam. Aliquam imperdiet
+          venenatis justo sit amet dictum. Nunc viverra ac massa a posuere. Nam
+          fringilla velit ultricies purus volutpat, vitae feugiat erat
+          scelerisque. Nullam sagittis dui vel dui varius, ut sagittis nibh
+          lobortis. Nunc tempor iaculis nisl at ullamcorper. Nulla id odio sit
+          amet massa eleifend posuere. Etiam blandit congue turpis a malesuada.
+          Phasellus scelerisque rutrum nulla eget malesuada. Phasellus a enim
+          varius, vestibulum dolor eu, condimentum velit. Vestibulum dapibus
+          neque erat, ac tristique tortor tempus vitae. Fusce ac felis
+          tincidunt, viverra enim non, tempus sem. Aenean vel nisi vel est
+          tristique lobortis. Proin eros orci, elementum eget neque eget, semper
+          euismod est. Pellentesque eu enim ante. Morbi vel leo tincidunt, porta
+          leo pulvinar, consectetur nibh. Proin lorem leo, commodo eu lectus a,
+          faucibus semper eros. Donec aliquet dignissim mattis. Nulla facilisi.
+          In eget sagittis risus. Morbi porttitor nisi dolor. Duis vehicula
+          aliquet scelerisque. Orci varius natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus. Maecenas vestibulum orci
+          sed facilisis pharetra. Vestibulum pellentesque felis urna, sit amet
+          ultrices lectus accumsan at. Mauris id vulputate lectus, vel maximus
+          nisl. Mauris gravida vel leo et efficitur. In in odio eu nulla euismod
+          suscipit ut sed nisi. Cras commodo dapibus justo et efficitur. Mauris
+          viverra, sapien ut tincidunt lobortis, turpis magna eleifend justo,
+          vitae feugiat ex massa eu est. Sed et euismod turpis. Interdum et
+          malesuada fames ac ante ipsum primis in faucibus. Proin dignissim
+          volutpat laoreet. Suspendisse ante ex, dignissim quis consectetur non,
+          pretium luctus enim. Ut enim ex, porttitor vel tincidunt et, pretium
+          vitae nibh. Sed blandit, justo eu fermentum tempor, nibh metus
+          eleifend felis, sit amet posuere tortor nisl nec magna. Quisque et
+          pretium purus. Donec quis sapien sed massa consectetur malesuada.
+          Quisque vitae massa a tellus sodales feugiat id a eros. Vivamus a
+          tincidunt nulla. Sed pharetra ut ex ac consectetur. Duis justo augue,
+          gravida eu consectetur ultricies, tempus ut ipsum. Nulla luctus elit
+          et erat fermentum placerat. Cras porta dolor maximus ipsum fermentum
+          malesuada id non odio. Mauris ac sapien porta, tristique nisi at,
+          egestas tortor. Vivamus justo ante, ultricies ut pulvinar in,
+          fringilla eu nisl. Proin quam leo, lobortis in accumsan at,
+          condimentum sit amet leo. Phasellus efficitur varius sagittis.
+        </p>
       </form>
-    </p>
+    </div>
   </body>
 </html>

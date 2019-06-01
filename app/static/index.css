@@ -1,0 +1,46 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  background-color: grey;
+  margin: auto;
+}
+
+#content {
+  position: relative;
+  top: 20px;
+  background-color: white;
+  padding: 200px 175px 0 175px;
+}
+
+h1 {
+  font-weight: bolder;
+  font-size: 1.4em;
+}
+
+h2 {
+  font-weight: normal;
+  font-size: 1.25em;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+h4 {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+input,
+select {
+  background-color: lightgray;
+  width: 100px;
+}
+
+#fakeText {
+  text-indent: 10pt;
+  filter: blur(5px);
+}
