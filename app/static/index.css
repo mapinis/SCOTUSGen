@@ -1,10 +1,20 @@
+@font-face {
+  font-family: "New Century Schoolbook Regular";
+  src: url("fonts/newcenturyschoolbook.woff2") format("woff2"),
+    url("fonts/newcenturyschoolbook.woff") format("woff"),
+    url("fonts/newcenturyschoolbook.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "New Century Schoolbook Regular", Times, serif;
   width: 100%;
   max-width: 900px;
   text-align: center;
   background-color: grey;
   margin: auto;
+  font-size: 90%;
 }
 
 #content {
