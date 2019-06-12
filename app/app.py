@@ -27,6 +27,8 @@ def index():
 @app.route("/generate", methods=["POST"])
 def generate():
     uuid = str(uuid1())
+    runningUUIDs.append(uuid)
+
     thread = Thread(
         target=generateOpinion,
         args=(
@@ -39,8 +41,6 @@ def generate():
         ),
         daemon=True,
     )
-
-    runningUUIDs.append(uuid)
     thread.start()
 
     return redirect(url_for("loading", uuid=uuid))
@@ -52,6 +52,7 @@ def loading():
     uuid = request.args.get("uuid", "")
 
     if uuid not in runningUUIDs:
+        print(f"loading: {uuid} not found")
         return redirect(url_for("index"))
 
     return render_template("loading.html", uuid=uuid)
@@ -69,9 +70,9 @@ def checkProgress():
     filename = uuid + ".pdf"
 
     if os.path.isfile("opinions/" + filename):
-        return jsonify({"ready": True})
+        return jsonify({"ready": True}), 200
     else:
-        return jsonify({"ready": False})
+        return jsonify({"ready": False}), 200
 
 
 # Gets and returns the opinion
@@ -80,6 +81,7 @@ def opinion():
     uuid = request.args.get("uuid", "")
 
     if uuid not in runningUUIDs:
+        print(f"opinion: {uuid} not found")
         return redirect(url_for("index"))
 
     filename = uuid + ".pdf"
