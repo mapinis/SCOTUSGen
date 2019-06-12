@@ -6,7 +6,7 @@ from flask import (
     jsonify,
     redirect,
     url_for,
-    make_response,
+    flash,
 )
 import os
 from threading import Thread
@@ -17,14 +17,10 @@ from generateOpinion import generateOpinion
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
 
-runningUUIDs = []
-
 
 @app.route("/")
 def index():
-    res = make_response(render_template("index.html"))
-    res.set_cookie("uuid", "")
-    return res
+    return render_template("index.html")
 
 
 # Starts the generate thread and returns redirect with uuid
@@ -45,21 +41,14 @@ def generate():
     )
 
     thread.start()
-    runningUUIDs.append(uuid)
 
-    res = make_response(redirect(url_for("loading")))
-    res.set_cookie("uuid", uuid)
-    return res
+    flash(uuid)
+    return redirect(url_for("loading"))
 
 
 # Redirected to after submit, renders loading page with function that pings /api/getOpinion
 @app.route("/loading", methods=["GET"])
 def loading():
-    if request.cookies.get("uuid") not in runningUUIDs:
-        res = make_response(redirect(url_for("index")))
-        res.set_cookie("uuid", "")
-        return res
-
     return render_template("loading.html")
 
 
@@ -67,12 +56,7 @@ def loading():
 # Checks if file has been made, if so tell client
 @app.route("/api/checkProgress", methods=["GET"])
 def checkProgress():
-    uuid = request.cookies.get("uuid")
-
-    if uuid not in runningUUIDs:
-        return "Bad UUID Cookie", 400
-
-    filename = uuid + ".pdf"
+    filename = request.args.get("uuid", "") + ".pdf"
 
     if os.path.isfile("opinions/" + filename):
         return jsonify({"ready": True})
@@ -83,14 +67,7 @@ def checkProgress():
 # Gets and returns the opinion
 @app.route("/opinion", methods=["GET"])
 def opinion():
-    uuid = request.cookies.get("uuid")
-
-    if uuid not in runningUUIDs:
-        res = make_response(redirect(url_for("index")))
-        res.set_cookie("uuid", "")
-        return res
-
-    filename = uuid + ".pdf"
+    filename = request.args.get("uuid", "") + ".pdf"
 
     if os.path.isfile("opinions/" + filename):
         # send and delete the file
@@ -100,11 +77,9 @@ def opinion():
                 yield from f
 
             os.remove("opinions/" + filename)
-            runningUUIDs.remove(uuid)
 
         res = app.response_class(loadAndDelete(), mimetype="application/pdf")
         res.headers.set("Content-Disposision", "attachment", filename="opinion.pdf")
-        res.set_cookie("uuid", "")
         return res
     else:
         return "you messed up"
