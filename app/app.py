@@ -53,6 +53,7 @@ def loading():
 
     if uuid not in runningUUIDs:
         print(f"loading: {uuid} not found")
+        print(f"runningUUIDs: {runningUUIDs}")
         return redirect(url_for("index"))
 
     return render_template("loading.html", uuid=uuid)
@@ -65,6 +66,8 @@ def checkProgress():
     uuid = request.args.get("uuid", "")
 
     if uuid not in runningUUIDs:
+        print(f"checkProgress: {uuid} not found")
+        print(f"runningUUIDs: {runningUUIDs}")
         return "Bad UUID", 400
 
     filename = uuid + ".pdf"
@@ -82,6 +85,7 @@ def opinion():
 
     if uuid not in runningUUIDs:
         print(f"opinion: {uuid} not found")
+        print(f"runningUUIDs: {runningUUIDs}")
         return redirect(url_for("index"))
 
     filename = uuid + ".pdf"
