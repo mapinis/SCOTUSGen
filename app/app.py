@@ -6,24 +6,34 @@ from flask import (
     jsonify,
     redirect,
     url_for,
-    session,
+    g,
 )
 import os
+import dataset
 from threading import Thread
 from uuid import uuid1
 
 from generateOpinion import generateOpinion
 
 app = Flask(__name__)
-app.secret_key = os.urandom(16)
 
 
-def setupSession():
-    session["runningUUIDs"] = []
-    session.modified = True
+def get_db_table():
+    if "db" not in g:
+        g.db = dataset.connect()
+
+    return g.db, g.db["runningUUIDs"]
 
 
-app.before_first_request(setupSession)
+@app.teardown_appcontext
+def close_db(err=None):
+    if err:
+        print(err)
+
+    db = g.pop("db", None)
+
+    if db:
+        db.executable.close()
 
 
 @app.route("/")
@@ -34,9 +44,13 @@ def index():
 # Starts the generate thread and returns redirect with uuid
 @app.route("/generate", methods=["POST"])
 def generate():
+    db, table = get_db_table()
     uuid = str(uuid1())
-    session["runningUUIDs"].append(uuid)
-    session.modified = True
+
+    table.insert({"uuid": uuid})
+    db.commit()
+
+    close_db()
 
     thread = Thread(
         target=generateOpinion,
@@ -58,27 +72,37 @@ def generate():
 # Redirected to after submit, renders loading page with function that pings /api/getOpinion
 @app.route("/loading", methods=["GET"])
 def loading():
+    db, table = get_db_table()
     uuid = request.args.get("uuid", "")
 
-    if uuid not in session["runningUUIDs"]:
+    if not table.find_one(uuid=uuid):
         print(f"loading: {uuid} not found")
-        print(f"runningUUIDs: {session['runningUUIDs']}")
+        print("Running UUIDs:")
+        for row in table:
+            print(row["uuid"])
+        close_db()
         return redirect(url_for("index"))
 
+    close_db()
     return render_template("loading.html", uuid=uuid)
 
 
 # Pinged every two seconds after submit
 # Checks if file has been made, if so tell client
 @app.route("/api/checkProgress", methods=["GET"])
-def checkProgress():
+def check_progress():
+    db, table = get_db_table()
     uuid = request.args.get("uuid", "")
 
-    if uuid not in session["runningUUIDs"]:
+    if not table.find_one(uuid=uuid):
         print(f"checkProgress: {uuid} not found")
-        print(f"runningUUIDs: {session['runningUUIDs']}")
+        print("Running UUIDs:")
+        for row in table:
+            print(row["uuid"])
+        close_db()
         return "Bad UUID", 400
 
+    close_db()
     filename = uuid + ".pdf"
 
     if os.path.isfile("opinions/" + filename):
@@ -90,29 +114,36 @@ def checkProgress():
 # Gets and returns the opinion
 @app.route("/opinion", methods=["GET"])
 def opinion():
+    db, table = get_db_table()
     uuid = request.args.get("uuid", "")
 
-    if uuid not in session["runningUUIDs"]:
+    if not table.find_one(uuid=uuid):
         print(f"opinion: {uuid} not found")
-        print(f"runningUUIDs: {session['runningUUIDs']}")
+        print("Running UUIDs:")
+        for row in table:
+            print(row["uuid"])
+        close_db()
         return redirect(url_for("index"))
 
     filename = uuid + ".pdf"
 
     if os.path.isfile("opinions/" + filename):
+
+        table.delete(uuid=uuid)
+        db.commit()
+        close_db()
+
         # send and delete the file
         # https://stackoverflow.com/questions/40853201/remove-file-after-flask-serves-it?rq=1
-        def loadAndDelete():
+        def load_and_delete():
             with open("opinions/" + filename, mode="rb") as f:
                 yield from f
 
             os.remove("opinions/" + filename)
 
-        session["runningUUIDs"].remove(uuid)
-        session.modified = True
-
-        res = app.response_class(loadAndDelete(), mimetype="application/pdf")
+        res = app.response_class(load_and_delete(), mimetype="application/pdf")
         res.headers.set("Content-Disposision", "attachment", filename="opinion.pdf")
         return res
     else:
-        return "you messed up"
+        close_db()
+        return redirect(url_for("loading", uuid=uuid))
