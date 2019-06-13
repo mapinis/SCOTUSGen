@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "96cb478d917ff865f44f381fc1ecce1f02405b6ecefb1d70d11b1b25d11f3e3f"
+            "sha256": "a91a6d5a9d96b39fb492c701f7e69e11cac75803f872b8e39e107760e0b30245"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -470,6 +470,7 @@
             "hashes": [
                 "sha256:c7fef198b43ef31dfd783d094fd5ee435ce8717592e6784c45ba337254998017"
             ],
+            "index": "pypi",
             "version": "==1.3.4"
         },
         "tempdir": {

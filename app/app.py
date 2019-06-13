@@ -12,6 +12,7 @@ import os
 import dataset
 from threading import Thread
 from uuid import uuid1
+from sqlalchemy.pool import NullPool
 
 from generateOpinion import generateOpinion
 
@@ -20,7 +21,7 @@ app = Flask(__name__)
 
 def get_db_table():
     if "db" not in g:
-        g.db = dataset.connect()
+        g.db = dataset.connect(engine_kwargs={"poolclass": NullPool})
 
     return g.db, g.db["runningUUIDs"]
 
