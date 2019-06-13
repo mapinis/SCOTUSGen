@@ -6,6 +6,7 @@ from flask import (
     jsonify,
     redirect,
     url_for,
+    session,
 )
 import os
 from threading import Thread
@@ -14,8 +15,15 @@ from uuid import uuid1
 from generateOpinion import generateOpinion
 
 app = Flask(__name__)
+app.secret_key = os.urandom(16)
 
-runningUUIDs = []
+
+def setupSession():
+    session["runningUUIDs"] = []
+    session.modified = True
+
+
+app.before_first_request(setupSession)
 
 
 @app.route("/")
@@ -27,7 +35,8 @@ def index():
 @app.route("/generate", methods=["POST"])
 def generate():
     uuid = str(uuid1())
-    runningUUIDs.append(uuid)
+    session["runningUUIDs"].append(uuid)
+    session.modified = True
 
     thread = Thread(
         target=generateOpinion,
@@ -51,9 +60,9 @@ def generate():
 def loading():
     uuid = request.args.get("uuid", "")
 
-    if uuid not in runningUUIDs:
+    if uuid not in session["runningUUIDs"]:
         print(f"loading: {uuid} not found")
-        print(f"runningUUIDs: {runningUUIDs}")
+        print(f"runningUUIDs: {session['runningUUIDs']}")
         return redirect(url_for("index"))
 
     return render_template("loading.html", uuid=uuid)
@@ -65,9 +74,9 @@ def loading():
 def checkProgress():
     uuid = request.args.get("uuid", "")
 
-    if uuid not in runningUUIDs:
+    if uuid not in session["runningUUIDs"]:
         print(f"checkProgress: {uuid} not found")
-        print(f"runningUUIDs: {runningUUIDs}")
+        print(f"runningUUIDs: {session['runningUUIDs']}")
         return "Bad UUID", 400
 
     filename = uuid + ".pdf"
@@ -83,9 +92,9 @@ def checkProgress():
 def opinion():
     uuid = request.args.get("uuid", "")
 
-    if uuid not in runningUUIDs:
+    if uuid not in session["runningUUIDs"]:
         print(f"opinion: {uuid} not found")
-        print(f"runningUUIDs: {runningUUIDs}")
+        print(f"runningUUIDs: {session['runningUUIDs']}")
         return redirect(url_for("index"))
 
     filename = uuid + ".pdf"
@@ -98,7 +107,9 @@ def opinion():
                 yield from f
 
             os.remove("opinions/" + filename)
-            runningUUIDs.remove(uuid)
+
+        session["runningUUIDs"].remove(uuid)
+        session.modified = True
 
         res = app.response_class(loadAndDelete(), mimetype="application/pdf")
         res.headers.set("Content-Disposision", "attachment", filename="opinion.pdf")

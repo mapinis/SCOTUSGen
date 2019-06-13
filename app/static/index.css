@@ -7,6 +7,10 @@
   font-style: normal;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: "New Century Schoolbook Regular", Times, serif;
   width: 100%;
@@ -15,6 +19,8 @@ body {
   background-color: #525659;
   margin: auto;
   font-size: 90%;
+  height: 100%;
+  overflow: hidden;
 }
 
 #content {
@@ -22,6 +28,8 @@ body {
   top: 20px;
   background-color: white;
   padding: 200px 175px 0 175px;
+  height: 100%;
+  overflow: hidden;
 }
 
 h1 {
@@ -53,4 +61,7 @@ select {
 #fakeText {
   text-indent: 10pt;
   filter: blur(5px);
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
 }
